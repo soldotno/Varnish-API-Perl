@@ -38,7 +38,7 @@ get_field_type() {
 		 dTHX;
 	     HV* fields;
 	     fields = newHV();
-#define MAC_STAT(type, l, field, description)	\
+#define MAC_STAT(type, l, field, description, e)	\
 	{ \
 	  char * tmp = #field; \
 	  hv_store(fields, #type, strlen(#type), newSVpv(&tmp[1], 1),0); \
@@ -54,7 +54,7 @@ get_field_descriptions() {
 		 dTHX;
 	     HV* fields;
 	     fields = newHV();
-#define MAC_STAT(type, l, field, description)	\
+#define MAC_STAT(type, l, field, description, e)	\
 	  hv_store(fields, #type, strlen(#type), newSVpv(description, 0),0); \
 		
 #include <varnish/stat_field.h>
@@ -80,7 +80,7 @@ IV
 get_stat(struct varnish_stats *VSL_stats, const char* stat) {
 
 
-#define MAC_STAT(type, l, field, description)	\
+#define MAC_STAT(type, l, field, description, e)	\
   if(!strcmp(#type, stat)) {			\
     return VSL_stats->type;			\
   }				   \
